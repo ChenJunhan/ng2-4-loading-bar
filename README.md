@@ -4,9 +4,44 @@
 ## Installation
 
 ```sh
-npm install ng2-4-loading-bar --save
+git clone git@github.com:ChenJunhan/ng2-4-loading-bar.git
+git clone
+https://github.com/ChenJunhan/ng2-4-loading-bar.git
 ```
 
 ## Usage
+1.在customHttp.ts和share文件夹放跟app.module.ts同一级目录中,然后在app.module.ts中引入：
+```sh
+import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
+import { LoadingBarService } from './share/loading-bar/loading-bar.service';
+import { CustomHttp } from './customHttp';
+import { providerHttp } from './customHttp';
+import { LoadingBarComponent } from './share/loading-bar/loading-bar.component';
+@NgModule({
+  declarations: [
+    AppComponent,
+    LoadingBarComponent,
+  ],
+  providers: [
+    AppService,
+    LoadingBarService,
+    {
+    provide: Http,
+    useFactory: providerHttp,
+    deps: [XHRBackend, RequestOptions, LoadingBarService]
+    }
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+2.在app.component.html中写入就可以了：
+```sh
+<div id="app">
+  <router-outlet></router-outlet>
+  <loading-bar></loading-bar>
+</div>
+```
 
 
