@@ -10,7 +10,7 @@ git clone https://github.com/ChenJunhan/ng2-4-loading-bar.git
 
 ## Usage
 1.在customHttp.ts和share文件夹放跟app.module.ts同一级目录中,然后在app.module.ts中引入：
-```javascript
+``` javascript
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { LoadingBarService } from './share/loading-bar/loading-bar.service';
 import { CustomHttp } from './customHttp';
@@ -38,7 +38,7 @@ export class AppModule { }
 ```
 
 2.在app.component.html中写入就可以了：
-```javascript
+``` html
 <div id="app">
   <router-outlet></router-outlet>
   <loading-bar></loading-bar>
