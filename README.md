@@ -5,8 +5,7 @@
 
 ```sh
 git clone git@github.com:ChenJunhan/ng2-4-loading-bar.git
-git clone
-https://github.com/ChenJunhan/ng2-4-loading-bar.git
+git clone https://github.com/ChenJunhan/ng2-4-loading-bar.git
 ```
 
 ## Usage
@@ -17,6 +16,7 @@ import { LoadingBarService } from './share/loading-bar/loading-bar.service';
 import { CustomHttp } from './customHttp';
 import { providerHttp } from './customHttp';
 import { LoadingBarComponent } from './share/loading-bar/loading-bar.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +33,7 @@ import { LoadingBarComponent } from './share/loading-bar/loading-bar.component';
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
 ```
 
