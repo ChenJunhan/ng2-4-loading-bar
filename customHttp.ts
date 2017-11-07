@@ -32,15 +32,15 @@ export class CustomHttp extends Http {
     }
 
     post(url: string, body: string, options ?: RequestOptionsArgs): Observable < Response > {
-        return this.intercept(super.post(url, body, this.getRequestOptionArgs(options)));
+        return this.intercept(super.post(url, body, options));
     }
 
     put(url: string, body: string, options?: RequestOptionsArgs): Observable < Response > {
-        return this.intercept(super.put(url, body, this.getRequestOptionArgs(options)));
+        return this.intercept(super.put(url, body, options));
     }
 
     delete(url: string, options ?: RequestOptionsArgs): Observable < Response > {
-        return this.intercept(super.put(url, this.getRequestOptionArgs(options)));
+        return this.intercept(super.put(url, options));
     }
 
     getRequestOptionArgs(options ?: RequestOptionsArgs): RequestOptionsArgs {
@@ -62,6 +62,10 @@ export class CustomHttp extends Http {
             observer.next(res);
           }, (err) => {
             observer.error(err);
+            this.timer.forEach((c, i) => {
+                clearTimeout(this.timer[i]);
+            });
+            this.loading.close(); 
           }, () => {
             // 每完成一个请求sum+1,直到所有的请求完成后才清除loading-bar定时器并关闭
             this.sum++;
@@ -91,8 +95,7 @@ export class CustomHttp extends Http {
     }
 }
 
-export let providerHttp = ( backend: XHRBackend,
+export function providerHttp( backend: XHRBackend,
         defaultOptions: RequestOptions,
         loading: LoadingBarService,
-        popup: PopupService) => new CustomHttp(backend, defaultOptions, loading, popup);
-
+        popup: PopupService){ return new CustomHttp(backend, defaultOptions, loading, popup) } ;
