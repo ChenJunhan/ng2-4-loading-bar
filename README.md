@@ -13,22 +13,26 @@ git clone https://github.com/ChenJunhan/ng2-4-loading-bar.git
 ``` javascript
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { LoadingBarService } from './share/loading-bar/loading-bar.service';
+import { PopupService } from './share/popup/popup.service';
 import { CustomHttp } from './customHttp';
 import { providerHttp } from './customHttp';
 import { LoadingBarComponent } from './share/loading-bar/loading-bar.component';
+import { PopupComponent } from './share/popup/popup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoadingBarComponent,
+    PopupComponent,
   ],
   providers: [
     AppService,
     LoadingBarService,
+    PopupService,
     {
-    provide: Http,
-    useFactory: providerHttp,
-    deps: [XHRBackend, RequestOptions, LoadingBarService]
+      provide: Http,
+      useFactory: providerHttp,
+      deps: [XHRBackend, RequestOptions, LoadingBarService, PopupService]
     }
   ],
   bootstrap: [AppComponent]
