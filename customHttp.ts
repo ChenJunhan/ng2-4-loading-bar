@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Request, RequestOptionsArgs, Response, RequestOptions, ConnectionBackend, Headers, XHRBackend } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { LoadingBarService } from './theme/share/loading-bar/loading-bar.service';
-import { PopupService } from './theme/share/popup/popup.service';
+import { LoadingBarService } from './share/loading-bar/loading-bar.service';
+import { PopupService } from './share/popup/popup.service';
 
 @Injectable()
 export class CustomHttp extends Http {
@@ -23,7 +23,7 @@ export class CustomHttp extends Http {
         // 每多一个请求加一个定时器
         this.timer.push(setTimeout(() => {
             this.loading.open();
-        }, 300));
+        }, 600));
         
         this.count++;
         return this.intercept(super.request(url, options));
@@ -118,3 +118,8 @@ export class CustomHttp extends Http {
         }
     }
 }
+
+export function providerHttp( backend: XHRBackend,
+                defaultOptions: RequestOptions,
+                loading: LoadingBarService,
+                popup: PopupService){ return new CustomHttp(backend, defaultOptions, loading, popup) } ;

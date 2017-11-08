@@ -42,6 +42,7 @@ export class AppModule { }
 <div id="app">
   <router-outlet></router-outlet>
   <loading-bar></loading-bar>
+  <popup></popup>
 </div>
 ```
 
