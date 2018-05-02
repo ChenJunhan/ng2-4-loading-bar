@@ -78,8 +78,7 @@ export class CustomHttp extends Http {
           }, (err) => {
             
             observer.error(err);
-            this.closeLoading();
-            this.handleError(err.status)
+            this.handleError(err)
             
           }, () => {
             observer.complete(); // 注意添加这句，否则有可能一些第三方的包不能正常使用，如ng2-translate
@@ -97,25 +96,39 @@ export class CustomHttp extends Http {
         this.timer.forEach((c, i) => {
           clearTimeout(this.timer[i]);
         });
-        this.loading.close();
+        if (this.sum === this.count) this.loading.close();     // 如果还有请求未完成则不隐藏loding...
       }, 300)
     }
 
     // 报错状态码
-    handleError(status) {
-        if (status === 0) {
+    handleError(d) {
+
+        let res;
+        try {
+          res = d.json();
+        }catch(error) {
+
+          const status = d.status;
+          if (status === 0) {
             this.popup.open('请求响应错误，请检查网络');
-            this.loading.close();
-        } else if (status === 404) {
+            this.closeLoading();
+          } else if (status === 404) {
             this.popup.open('请求链接不存在，请联系管理员');
-            this.loading.close();
-        } else if (status === 500) {
+            this.closeLoading();
+          } else if (status === 500) {
             this.popup.open('服务器出错，请稍后再试');
-            this.loading.close();
-        } else {
+            this.closeLoading();
+          } else {
             this.popup.open('未知错误，请检查网络');
-            this.loading.close();
+            this.closeLoading();
+          }
+          return;
         }
+
+        this.closeLoading();
+        this.popup.open(res.message)
+
+
     }
 }
 
